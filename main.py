@@ -1,6 +1,6 @@
 import sys
 import requests
-from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QMessageBox)
+from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, QMessageBox)
 from PyQt5.QtCore import Qt
 import config
 
@@ -13,19 +13,27 @@ class WeatherApp(QWidget):
         self.temperature_label = QLabel(self)
         self.emoji_label = QLabel(self)
         self.description_label = QLabel(self)
+        self.humidity_label = QLabel(self)
+        self.wind_label = QLabel(self)
+        self.pressure_label = QLabel(self)
         self.initUI()
 
     def initUI(self):
         self.setWindowTitle("Weather App")
 
         vbox = QVBoxLayout()
-
         vbox.addWidget(self.city_label)
         vbox.addWidget(self.city_input)
         vbox.addWidget(self.get_weather_button)
         vbox.addWidget(self.temperature_label)
         vbox.addWidget(self.emoji_label)
         vbox.addWidget(self.description_label)
+
+        stats_box = QHBoxLayout()
+        stats_box.addWidget(self.humidity_label)
+        stats_box.addWidget(self.wind_label)
+        stats_box.addWidget(self.pressure_label)
+        vbox.addLayout(stats_box)
 
         self.setLayout(vbox)
 
@@ -34,6 +42,9 @@ class WeatherApp(QWidget):
         self.temperature_label.setAlignment(Qt.AlignCenter)
         self.emoji_label.setAlignment(Qt.AlignCenter)
         self.description_label.setAlignment(Qt.AlignCenter)
+        self.humidity_label.setAlignment(Qt.AlignCenter)
+        self.wind_label.setAlignment(Qt.AlignCenter)
+        self.pressure_label.setAlignment(Qt.AlignCenter)
 
         self.city_label.setObjectName('city_label')
         self.city_input.setObjectName('city_input')
@@ -42,6 +53,9 @@ class WeatherApp(QWidget):
         self.temperature_label.setObjectName('temperature_label')
         self.emoji_label.setObjectName('emoji_label')
         self.description_label.setObjectName('description_label')
+        self.humidity_label.setObjectName('stats_label')
+        self.wind_label.setObjectName('stats_label')
+        self.pressure_label.setObjectName('stats_label')
 
         self.setStyleSheet("""
             QLabel, QPushButton{
@@ -67,6 +81,13 @@ class WeatherApp(QWidget):
             }
             QLabel#description_label{
                 font-size: 50px;
+                margin-bottom: 20px;
+            }
+            QLabel#stats_label{
+                font-size: 20px;
+                font-weight: bold;
+                color: #333;
+                padding: 5px;
             }
         """)
 
@@ -128,10 +149,16 @@ class WeatherApp(QWidget):
         temperature_c = temperature_k - 273.15
         weather_id = data["weather"][0]["id"]
         weather_description = data["weather"][0]["description"]
+        humidity = data["main"]["humidity"]
+        wind_speed = data["wind"]["speed"]
+        pressure = data["main"]["pressure"]
 
         self.temperature_label.setText(f"{temperature_c:.0f}°C")
         self.emoji_label.setText(self.get_weather_emoji(weather_id))
         self.description_label.setText(f"{weather_description}")
+        self.humidity_label.setText(f"Humidity:\n{humidity:.0f}%")
+        self.wind_label.setText(f"Wind speed:\n{wind_speed:.0f}m/s")
+        self.pressure_label.setText(f"Pressure:\n{pressure:.0f}mb")
 
     @staticmethod
     def get_weather_emoji(weather_id):
@@ -153,9 +180,6 @@ class WeatherApp(QWidget):
             return "☁️"
         else:
             return ""
-
-
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
