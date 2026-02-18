@@ -1,22 +1,30 @@
 # 🌦️ Weather App (Work In Progress)
 
-Desktopowa aplikacja pogodowa budowana w języku **Python** przy użyciu biblioteki **PyQt5**.
-Projekt jest obecnie w fazie aktywnego rozwoju. Celem jest stworzenie interfejsu GUI, który pobiera i wyświetla dane pogodowe w czasie rzeczywistym z zewnętrznego API.
+Desktopowa aplikacja pogodowa zbudowana w języku **Python** przy użyciu biblioteki **PyQt5**. 
+Aplikacja pobiera i wyświetla aktualne dane meteorologiczne w czasie rzeczywistym, wykorzystując integrację z zewnętrznym API.
 
-🚧 **Status projektu:** W trakcie implementacji (GUI gotowe, trwają prace nad logiką backendową).
+🚧 **Status projektu:** Wersja w pełni funkcjonalna. Trwają prace z nowymi funkcjami użytkowymi.
+
+## ✨ Główne funkcje (Features)
+* **Real-time API Integration:** Pobieranie danych na żywo z OpenWeatherMap API.
+* **Dynamiczny motyw (Dzień/Noc):** Aplikacja automatycznie zmienia tło i kontrast czcionek w zależności od cyklu dobowego w wybranym mieście.
+* **Rozszerzone statystyki:** Wyświetlanie nie tylko temperatury, ale również wilgotności, prędkości wiatru i ciśnienia atmosferycznego.
+* **Rozbudowana obsługa błędów:** Bezpieczne zarządzanie kodami błędów HTTP (np. 404, 401) oraz problemami z połączeniem internetowym.
+* **UX / Usability:** Obsługa wyszukiwania za pomocą klawisza `Enter` dla większej wygody użytkownika.
 
 ## 🛠️ Technologie
 * **Python 3.x**
-* **PyQt5** (Interfejs graficzny)
-* **Requests** (Planowane: obsługa żądań HTTP do API)
-* **OpenWeatherMap API** (Planowane)
+* **PyQt5** (Interfejs graficzny / CSS Styling)
+* **Requests** (Komunikacja HTTP)
+* **OpenWeatherMap API** (Źródło danych)
 
-## 🔜 Roadmapa (Najbliższe cele)
-* [x] Stworzenie szkieletu GUI i stylizacja (CSS).
-* [ ] Implementacja obsługi biblioteki `requests`.
-* [ ] Integracja z kluczem API (OpenWeatherMap).
-* [ ] Obsługa błędów (np. błędna nazwa miasta, brak internetu).
-* [ ] Wyświetlanie dynamicznych ikon pogodowych.
+## 🔜 Roadmapa (Zrealizowane i przyszłe cele)
+* [x] Stworzenie szkieletu GUI i podstawowa stylizacja (CSS).
+* [x] Integracja z kluczem API oraz obsługa zapytań `requests`.
+* [x] Wdrożenie obsługi błędów i weryfikacja danych wejściowych.
+* [x] Implementacja dynamicznego motywu wizualnego.
+* [ ] Zapisywanie ulubionych miejscowości (lokalny plik konfiguracyjny/JSON).
+* [ ] Refaktoryzacja architektury kodu (separacja logiki API od widoku GUI).
 
 ## 💡 Inspiracja
-Projekt bazuje na strukturze z kursu *Bro Code*, jednak jest przeze mnie rozwijany o własne rozwiązania w zakresie obsługi błędów i architektury kodu.
+Początkowa struktura interfejsu została zainspirowana kursem *Bro Code*, jednak projekt został znacząco rozbudowany o autorskie rozwiązania (np. obsługa błędów, dynamiczne motywy, dodatkowe statystyki), aby spełniać standardy nowoczesnych aplikacji desktopowych.
