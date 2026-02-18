@@ -46,6 +46,7 @@ class WeatherApp(QWidget):
         self.wind_label.setAlignment(Qt.AlignCenter)
         self.pressure_label.setAlignment(Qt.AlignCenter)
 
+        self.setObjectName("main")
         self.city_label.setObjectName('city_label')
         self.city_input.setObjectName('city_input')
         self.temperature_label.setObjectName('temperature_label')
@@ -57,7 +58,7 @@ class WeatherApp(QWidget):
         self.wind_label.setObjectName('stats_label')
         self.pressure_label.setObjectName('stats_label')
 
-        self.setStyleSheet("""
+        self.base_style = """
             QLabel, QPushButton{
                 font-family: calibri;
             }
@@ -89,9 +90,11 @@ class WeatherApp(QWidget):
                 color: #333;
                 padding: 5px;
             }
-        """)
+        """
+        self.setStyleSheet(self.base_style)
 
         self.get_weather_button.clicked.connect(self.get_weather)
+        self.city_input.returnPressed.connect(self.get_weather)
 
     def get_weather(self):
 
@@ -152,7 +155,22 @@ class WeatherApp(QWidget):
         humidity = data["main"]["humidity"]
         wind_speed = data["wind"]["speed"]
         pressure = data["main"]["pressure"]
+        icon_code = data["weather"][0]["icon"]
+        is_day = icon_code.endswith('d')
 
+        if is_day:
+            time_style = """
+                #main {
+                    background-color: #dcf294;
+                }
+            """
+        else:
+            time_style = """
+                #main {
+                    background-color: #384042;
+                }
+            """
+        self.setStyleSheet(self.base_style + time_style)
         self.temperature_label.setText(f"{temperature_c:.0f}°C")
         self.emoji_label.setText(self.get_weather_emoji(weather_id))
         self.description_label.setText(f"{weather_description}")
